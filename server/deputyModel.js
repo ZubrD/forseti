@@ -10,7 +10,7 @@ const pool = new Pool({
 const getDeputy = () => {
   return new Promise(function (resolve, reject) {
     pool.query(
-      "SELECT title, rule_number FROM public.forseti_rules WHERE rule_number= '1062568-7' ORDER BY id ASC",
+      "SELECT name FROM public.forseti_deputy ORDER BY id ASC LIMIT 10",
       (error, results) => {
         if (error) {
           reject(error);
