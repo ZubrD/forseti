@@ -1,40 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadDeputyList } from "./store/deputy";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getDeputy, loadDeputyList } from "./store/deputy";
 import { nanoid } from "nanoid";
-
+import { getRule, loadRuleList } from "./store/rule";
+import { getRegion, loadRegion } from "./store/region";
 
 function App() {
   const dispatch = useDispatch();
-  const [deputies, setDeputy] = useState(false);
-  const [newDep, setNewdep] = useState();
+  const rule = useSelector(getRule());
+  const deputy = useSelector(getDeputy());
+  const region = useSelector(getRegion());
+
   useEffect(() => {
-    getDeputy();
     dispatch(loadDeputyList());
+    dispatch(loadRuleList());
+    dispatch(loadRegion());
   }, []);
 
-  function getDeputy() {
-    fetch("http://localhost:3001")
-      .then((response) => {
-        return response.text();
-      })
-      .then((data) => {
-        const newData = JSON.parse(data);
-        setDeputy(data);
-        setNewdep(newData);
-      });
-  }
   return (
     <div>
-      {newDep&&
-      <ul>
-        {newDep.map(item=>{
-          return <li key={nanoid()}>{item.name}</li>
-        })}
-      </ul>
-      }
-      
-      {deputies ? deputies : "There is no deputy data available"}
+      {rule && (
+        <ul>
+          {rule.map((item) => {
+            return <li key={item.id}>{item.title}</li>;
+          })}
+        </ul>
+      )}
+
+      {deputy && (
+        <ul>
+          {deputy.map((item) => {
+            return <li key={nanoid()}>{item.name}</li>;
+          })}
+        </ul>
+      )}
+
+      {region && (
+        <ul>
+          {region.map((item) => {
+            return <li key={item.id}>{item.name}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
 }

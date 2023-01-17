@@ -26,22 +26,24 @@ const deputySlice = createSlice({
 const { reducer: deputyReducer, actions } = deputySlice;
 const { deputyRequested, deputyReceived, deputyRequestFailed } = actions;
 
-export const loadDeputyList = () => async (dispatch) => {
-    const data = httpService.getDeputy()
-    console.log(data)
-    dispatch(deputyRequested())
-    try {       
-        fetch("http://localhost:3001")
-        .then((response) => {
-          return response.text();
-        })
-        .then((data) => {
-          const newData = JSON.parse(data);
-         dispatch(deputyReceived(newData))   
-        });
-    } catch(error){
-        dispatch(deputyRequestFailed(error))
-    }
+export const loadDeputyList = () => (dispatch) => {
+  const data = httpService.fetchDeputy(); // Здесь почему-то равно undefined
+  // console.log(data)
+  dispatch(deputyRequested());
+  try {
+    fetch("http://localhost:3001")
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        const newData = JSON.parse(data);
+        dispatch(deputyReceived(newData));
+      });
+  } catch (error) {
+    dispatch(deputyRequestFailed(error));
+  }
 };
+
+export const getDeputy = () => (state) => state.deputy.entities;
 
 export default deputyReducer;
