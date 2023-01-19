@@ -10,7 +10,7 @@ const pool = new Pool({
 const getRegion = () => {
   return new Promise(function (resolve, reject) {
     pool.query(
-      "SELECT * FROM public.forseti_federalregion ORDER BY id ASC LIMIT 10",
+      "SELECT * FROM public.forseti_federalregion ORDER BY id ASC",
       (error, results) => {
         if (error) {
           reject(error);

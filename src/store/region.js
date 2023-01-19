@@ -44,4 +44,5 @@ export const loadRegion = () => (dispatch) => {
 
 export const getRegion = () => (state) => state.region.entities;
 
+
 export default regionReducer;
