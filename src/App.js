@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDeputy, loadDeputyList } from "./store/deputy";
 import { nanoid } from "nanoid";
 import { getRule, loadRuleList } from "./store/rule";
-import { getRegion, getRegionById, loadRegion } from "./store/region";
+import { getRegion, loadRegion } from "./store/region";
 import SelectRegion from "./components/selectRegion";
+import SelectDeputy from "./components/selectDeputy";
 
 function App() {
   const dispatch = useDispatch();
   const [regionDeputiesList, setRegionDeputiesList] = useState();
-  const [deputyDisabled, setDeputyDisabled] = useState(true)
+  const [deputyDisabled, setDeputyDisabled] = useState(true);
   const rule = useSelector(getRule());
   const deputy = useSelector(getDeputy());
   const region = useSelector(getRegion());
@@ -18,11 +19,11 @@ function App() {
     const selectedRegion = region.find(
       (reg) => reg.id === Number(target.value)
     );
-    const regionDeputies = deputy.filter(
-      (dep) => dep.region.includes(selectedRegion.name) 
+    const regionDeputies = deputy.filter((dep) =>
+      dep.region.includes(selectedRegion.name)
     );
     setRegionDeputiesList(regionDeputies);
-    setDeputyDisabled(false)
+    setDeputyDisabled(false);
   };
   // console.log(deputy)
 
@@ -43,29 +44,15 @@ function App() {
           </ul>
         )}
       </div> */}
-
-      {region && <SelectRegion onChange={handleSelectRegion} />}
-
-      {region && (
-        <div className="col-md-3">
-          <label htmlFor="validationCustom05" className="form-label">
-            Депутаты
-          </label>
-          <select className="form-select" id="validationCustom05" required disabled={deputyDisabled}>
-            <option selected disabled value="">
-              Выберите депутата...
-            </option>
-            {regionDeputiesList &&
-              regionDeputiesList.map((dep) => {
-                return (
-                  <option key={dep.id} value={dep.id}>
-                    {dep.name}
-                  </option>
-                );
-              })}
-          </select>
-        </div>
-      )}
+      <div className="d-flex flex-row">
+        {region && <SelectRegion onChange={handleSelectRegion} />}
+        {region && (
+          <SelectDeputy
+            deputiesList={regionDeputiesList}
+            disabledStatus={deputyDisabled}
+          />
+        )}
+      </div>
     </>
   );
 }

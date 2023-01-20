@@ -7,7 +7,7 @@ const SelectRegion = ({ onChange }) => {
 
 
   return (
-    <div className="col-md-3">
+    <div className="col-md-3 me-2">
       <label htmlFor="validationCustom04" className="form-label">
         Регионы
       </label>
