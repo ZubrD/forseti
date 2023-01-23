@@ -2,7 +2,7 @@ import React from "react";
 
 const SelectDeputy = ({deputiesList, disabledStatus}) => {
   return (
-    <div className="col-md-3">
+    <div className="col-md-3 mb-4 mt-4">
       <label htmlFor="validationCustom05" className="form-label">
         Депутаты
       </label>

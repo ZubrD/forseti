@@ -6,14 +6,17 @@ import { getRule, loadRuleList } from "./store/rule";
 import { getRegion, loadRegion } from "./store/region";
 import SelectRegion from "./components/selectRegion";
 import SelectDeputy from "./components/selectDeputy";
+import SearchRule from "./components/searchRule";
 
 function App() {
   const dispatch = useDispatch();
   const [regionDeputiesList, setRegionDeputiesList] = useState();
   const [deputyDisabled, setDeputyDisabled] = useState(true);
+  const [searchRule, setSearchRule] = useState("");
   const rule = useSelector(getRule());
   const deputy = useSelector(getDeputy());
   const region = useSelector(getRegion());
+  let hightlight = true; // Через useState не получается - бесконечный рендеринг
 
   const handleSelectRegion = ({ target }) => {
     const selectedRegion = region.find(
@@ -25,13 +28,28 @@ function App() {
     setRegionDeputiesList(regionDeputies);
     setDeputyDisabled(false);
   };
-  // console.log(deputy)
+
+  const handleSearchRule = ({ target }) => {
+    setSearchRule(target.value);
+  };
+
+  const handleRuleClick = (ruleId) => {
+    console.log(ruleId);
+  };
 
   useEffect(() => {
     dispatch(loadDeputyList());
     dispatch(loadRuleList());
     dispatch(loadRegion());
   }, []);
+
+  const filteredRules =
+    searchRule.length > 4 // Минимальное количество символов в запросе
+      ? rule.filter(
+          (rule) =>
+            rule.title.toLowerCase().indexOf(searchRule.toLowerCase()) !== -1
+        )
+      : [];
 
   return (
     <>
@@ -53,6 +71,12 @@ function App() {
           />
         )}
       </div>
+      <SearchRule
+        onChange={handleSearchRule}
+        onClick={handleRuleClick}
+        hightlight={hightlight}
+        filteredRules={filteredRules}
+      />
     </>
   );
 }
