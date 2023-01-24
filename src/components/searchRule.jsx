@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const SearchRule = ({ filteredRules, hightlight, onChange, onClick }) => {
+const SearchRule = ({ filteredRules, hightlight, onChange }) => {
   return (
     <>
       <div className="input-group mb-3 row">
@@ -8,7 +9,7 @@ const SearchRule = ({ filteredRules, hightlight, onChange, onClick }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Закон"
+            placeholder="Поиск начнётся после ввода 5 символов"
             aria-label="Username"
             aria-describedby="basic-addon1"
             onChange={onChange}
@@ -25,14 +26,14 @@ const SearchRule = ({ filteredRules, hightlight, onChange, onClick }) => {
               filteredRules.map((rule) => {
                 hightlight = !hightlight; // Для чередования выделения цветом результатов поиска
                 return (
-                  <div
-                    className={hightlight ? "hightlight-search-result" : ""}
-                    key={rule.id}
-                    role="button"
-                    onClick={() => onClick(rule.id)}
-                  >
-                    {rule.title}
-                  </div>
+                  <Link key={rule.id} to={`rules/${rule.rule_number}`}>
+                    <div
+                      className={hightlight ? "hightlight-search-result" : ""}
+                      role="button"
+                    >
+                      {rule.title}
+                    </div>
+                  </Link>
                 );
               })}
           </div>
