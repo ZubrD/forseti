@@ -31,7 +31,7 @@ export const loadDeputyList = () => (dispatch) => {
   // console.log(data)
   dispatch(deputyRequested());
   try {
-    fetch("http://localhost:3001")
+    fetch("http://localhost:3001/deputies")
       .then((response) => {
         return response.text();
       })

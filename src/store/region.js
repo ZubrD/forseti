@@ -29,7 +29,7 @@ const { regionRequested, regionReceived, regionRequestFailed } = actions;
 export const loadRegion = () => (dispatch) => {
   dispatch(regionRequested());
   try {
-    fetch("http://localhost:3003")
+    fetch("http://localhost:3001/regions")
       .then((response) => {
         return response.text();
       })
