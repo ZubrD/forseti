@@ -39,7 +39,7 @@ async function start() {
 start();
 
 
-app.get("/test", testModel.getTest)
+// app.get("/test", testModel.getTest)
 
 app.post("/ptest", testModel.postTest)
 
