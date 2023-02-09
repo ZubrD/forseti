@@ -15,10 +15,18 @@ class TokenService {
   validateRefresh(refreshToken) {
     try {
       return jwt.verify(refreshToken, config.get("refreshSecretString"));
-    } catch (e) {
+    } catch (error) {
       return null;
     }
   }
+
+  validateAccess(accessToken) {
+    try {
+      return jwt.verify(accessToken, config.get("accessSecretString"));
+    } catch (error) {
+      return null;
+    }
+  } 
 }
 
 module.exports = new TokenService()

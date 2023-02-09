@@ -41,7 +41,7 @@ start();
 
 // app.get("/test", testModel.getTest)
 
-app.post("/ptest", testModel.postTest)
+// app.post("/ptest", testModel.postTest)
 
 
 
